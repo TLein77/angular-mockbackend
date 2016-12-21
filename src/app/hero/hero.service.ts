@@ -4,7 +4,7 @@ import {Http, Headers} from "@angular/http";
 
 @Injectable()
 export class HeroService {
-    private heroesUrl = 'api/heroes'; // URL to web api
+    private heroesUrl = 'http://localhost:8080/api/heroes';
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {
@@ -14,7 +14,7 @@ export class HeroService {
         return this.http
             .post(this.heroesUrl, JSON.stringify({name: name}), {headers: this.headers})
             .toPromise()
-            .then(response => response.json().data)
+            .then(response => response.json())
             .catch(this.handleError);
     }
 
@@ -30,7 +30,7 @@ export class HeroService {
     getHeroes(): Promise<Hero[]> {
         return this.http.get(this.heroesUrl)
             .toPromise()
-            .then(response => response.json().data as Hero[])
+            .then(response => response.json() as Hero[])
             .catch(this.handleError);
     }
 
@@ -38,7 +38,7 @@ export class HeroService {
         const url = `${this.heroesUrl}/${id}`;
         return this.http.get(url)
             .toPromise()
-            .then(response => response.json().data as Hero[])
+            .then(response => response.json() as Hero[])
             .catch(this.handleError);
     }
 

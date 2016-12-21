@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {MockBackendService} from "./mock-backend/mock-backend.service";
 
 import '../../public/css/styles.css';
 
@@ -9,4 +10,10 @@ import '../../public/css/styles.css';
 })
 export class AppComponent {
     title = 'Tour of Heroes';
+
+    constructor(
+        private mockBackendService: MockBackendService
+    ) {
+        this.mockBackendService.start();
+    }
 }
