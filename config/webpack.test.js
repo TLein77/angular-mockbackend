@@ -45,5 +45,9 @@ module.exports = {
                 loader: 'raw'
             }
         ]
-    }
+    },
+
+    plugins: [
+        new ExtractTextPlugin('[name].css')
+    ]
 };
