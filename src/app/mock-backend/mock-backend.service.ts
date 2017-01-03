@@ -12,8 +12,8 @@ export class MockBackendService {
 
     start(): void {
         this.backend.connections.subscribe( (c: MockConnection) => {
-            const URL = "http://localhost:8080/api/heroes";
-            let heroIdRegex = /\/api\/heroes\/([0-9]+)/i;
+            const URL = "http://localhost:8080/heroes";
+            let heroIdRegex = /\/heroes\/([0-9]+)/i;
             let heroes: Hero[] = HEROES;
 
             // GET

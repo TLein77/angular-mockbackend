@@ -11,7 +11,8 @@ import {Location} from "@angular/common";
     providers: [HeroService]
 })
 export class HeroDetailComponent implements OnInit {
-    @Input() hero: Hero;
+    //@Input() hero: Hero;
+    hero: Hero;
 
     constructor(
         private heroService: HeroService,
@@ -22,7 +23,10 @@ export class HeroDetailComponent implements OnInit {
     ngOnInit(): void {
         this.route.params
             .switchMap((params: Params) => this.heroService.getHero(+params['id']))
-            .subscribe(hero => this.hero = hero);
+            .subscribe(hero => {
+                console.log('hero::' + JSON.stringify(hero));
+                this.hero = hero
+            });
     }
 
     goBack(): void {

@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class HeroService {
-    private heroesUrl = 'http://localhost:8080/api/heroes';
+    private heroesUrl = 'http://localhost:8080/heroes';
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {
@@ -40,7 +40,7 @@ export class HeroService {
         const url = `${this.heroesUrl}/${id}`;
         return this.http.get(url)
             .toPromise()
-            .then(response => response.json() as Hero[])
+            .then(response => response.json() as Hero)
             .catch(this.handleError);
     }
 

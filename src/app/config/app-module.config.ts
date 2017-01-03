@@ -6,8 +6,9 @@ import {HeroDetailComponent} from "../hero-detail/hero-detail.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {AppRoutingModule} from "../app-routing.module";
-import {BaseRequestOptions, Http} from "@angular/http";
+import {BaseRequestOptions, Http, HttpModule} from "@angular/http";
 import {MockBackend} from "@angular/http/testing";
+import {MockBackendService} from "../mock-backend/mock-backend.service";
 
 export const appComponents = [
     AppComponent,
@@ -17,18 +18,27 @@ export const appComponents = [
     HeroDetailComponent
 ];
 
-export const appImports = [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule
-];
+export const appImports = getAppModules();
 
-export const appProviders = [
-    BaseRequestOptions,
-    MockBackend,
-    {
-        provide: Http,
-        deps: [MockBackend, BaseRequestOptions],
-        useFactory: (backend: MockBackend, options: BaseRequestOptions) => { return new Http(backend, options); }
+export const appProviders = getAppProviders();
+
+function getAppProviders(): any[] {
+    let providers = <any>[MockBackendService, MockBackend];
+    if (process.env.ENV === 'mock') {
+        providers.push(BaseRequestOptions);
+        providers.push({
+            provide: Http,
+            deps: [MockBackend, BaseRequestOptions],
+            useFactory: (backend: MockBackend, options: BaseRequestOptions) => { return new Http(backend, options); }
+        });
     }
-];
+    return providers;
+}
+
+function getAppModules(): any[] {
+    let modules = [BrowserModule, FormsModule, AppRoutingModule];
+    if (process.env.ENV !== 'mock') {
+        modules.push(HttpModule);
+    }
+    return modules;
+}
