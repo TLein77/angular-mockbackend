@@ -11,7 +11,7 @@ module.exports = webpackMerge(commonConfig, {
 
     output: {
         path: helpers.root('dist'),
-        publicPath: '/life-policy-locator/',
+        publicPath: 'http://localhost:8181',
         filename: '[name].[hash].js',
         chunkFilename: '[id].[hash].chunk.js'
     },
